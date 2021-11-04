@@ -57,16 +57,16 @@
                     </div>
 
                     <!-- sezione card chat -->
-                    <section class="section--chat" v-for="chat in chatList">
+                    <section class="section--chat">
                         <!-- creo le card con il v-for -->
-                        <div class="card card--active">
+                        <div class="card card--active" v-for="chat,i in chatList" @click="setActiveChat(chat)">
                             <div class="img">
-                                <img :src="createAvatarPath(chat.img)" alt="avatar_1">
+                                <img :src="createAvatarPath(chat.img)" alt="avatar_{{ i }}">
                             </div>
                             <div class="info">
                                 <div class="color--primary">{{ chat.name }}</div>
-                                <div class="color--secondary">Tutto fatto!</div>
-                                <div class="color--secondary">03/10/2021 14:01:54</div>
+                                <div class="color--secondary">{{ getLastMessage(i) }}</div>
+                                <div class="color--secondary">{{ getLastMessageDate(i) }}</div>
                             </div>
                         </div>
                     </section>
@@ -75,11 +75,11 @@
                     <!-- header con le informazioni sulla chat attiva -->
                     <header class="container--right--header">
                         <div class="img">
-                            <img src="img/avatar_1.jpg" alt="avatar_user">
+                            <img :src="createAvatarPath(this.activeChat.img)" alt="avatar_user">
                         </div>
                         <div class="info">
-                            <div class="color--primary">Michele</div>
-                            <div class="color--secondary">Ultimo accesso oggi alle 03/10/2021 14:01:54</div>
+                            <div class="color--primary">{{ activeChat.name }}</div>
+                            <div class="color--secondary">Ultimo accesso il {{ getLastMessageDateActiveUser() }}</div>
                         </div>
                         <div class="icons">
                             <i class="fas fa-search"></i>
@@ -90,24 +90,14 @@
 
                     <!-- sezione dove vengono mostrati i messaggi -->
                     <section class="chat-messages">
-                        <div class="card--message card--message--sent">
-                            <div class="message message--sent">
-                                Testo molto molto molto molto molto molto lungo
-                                <span class="color--secondary">03/10/2021 14:01:54</span>
-                            </div>
-                        </div>
-
-                        <div class="card--message card--message--sent">
-                            <div class="message message--sent">
-                                Testo corto
-                                <span class="color--secondary">03/10/2021 14:01:54</span>
-                            </div>
-                        </div>
-
-                        <div class="card--message card--message--received">
-                            <div class="message message--received">
-                                Testo mediamente lungo
-                                <span class="color--secondary">03/10/2021 14:01:54</span>
+                        <!-- mostro tutti i messaggi in activeChat con un v-for -->
+                        <div class="card--message"
+                        :class="message.status === 'sent' ? 'card--message--sent' : 'card--message--received'"
+                        v-for="message in activeChat.messages">
+                            <div class="message"
+                            :class="message.status === 'sent' ? 'message--sent' : 'message--received'">
+                                {{ message.text }}
+                                <span class="color--secondary">{{ message.date.toLocaleString() }}</span>
                             </div>
                         </div>
                     </section>
@@ -117,7 +107,9 @@
                         <div class="img">
                             <i class="far fa-smile color--secondary"></i>
                         </div>
-                        <input type="text" class="type-bar color--secondary" placeholder="Scrivi un messaggio">
+                        <input type="text" class="type-bar color--secondary" placeholder="Scrivi un messaggio"
+                        v-model="newMessage"
+                        @keyup.enter="sendMessage()">
                         <div class="img">
                             <i class="fas fa-microphone color--secondary"></i>
                         </div>

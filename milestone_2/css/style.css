@@ -90,6 +90,9 @@ body {
 .card {
     background-color: white;
     justify-content: flex-start;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .card--active {
@@ -197,6 +200,7 @@ input {
 }
 
 .message {
+    min-width: 20%;
     max-width: 40%;
     border-radius: 10px;
     padding: 20px;
@@ -212,6 +216,7 @@ input {
 }
 
 .message--sent {
+    text-align: right;
     background-color: #d6f9be;
 }
 
