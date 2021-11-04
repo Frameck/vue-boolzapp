@@ -57,47 +57,14 @@
                     </div>
 
                     <!-- sezione card chat -->
-                    <section class="section--chat">
-                        <!-- card n°1 -->
+                    <section class="section--chat" v-for="chat in chatList">
+                        <!-- creo le card con il v-for -->
                         <div class="card card--active">
                             <div class="img">
-                                <img src="img/avatar_1.jpg" alt="avatar_1">
+                                <img :src="createAvatarPath(chat.img)" alt="avatar_1">
                             </div>
                             <div class="info">
-                                <div class="color--primary">Michele</div>
-                                <div class="color--secondary">Tutto fatto!</div>
-                                <div class="color--secondary">03/10/2021 14:01:54</div>
-                            </div>
-                        </div>
-                        <!-- card n°2 -->
-                        <div class="card">
-                            <div class="img">
-                                <img src="img/avatar_2.jpg" alt="avatar_2">
-                            </div>
-                            <div class="info">
-                                <div class="color--primary">Fabio</div>
-                                <div class="color--secondary">Tutto fatto!</div>
-                                <div class="color--secondary">03/10/2021 14:01:54</div>
-                            </div>
-                        </div>
-                        <!-- card n°3 -->
-                        <div class="card">
-                            <div class="img">
-                                <img src="img/avatar_3.jpg" alt="avatar_3">
-                            </div>
-                            <div class="info">
-                                <div class="color--primary">Samuele</div>
-                                <div class="color--secondary">Tutto fatto!</div>
-                                <div class="color--secondary">03/10/2021 14:01:54</div>
-                            </div>
-                        </div>
-                        <!-- card n°4 -->
-                        <div class="card">
-                            <div class="img">
-                                <img src="img/avatar_6.jpg" alt="avatar_6">
-                            </div>
-                            <div class="info">
-                                <div class="color--primary">Luisa</div>
+                                <div class="color--primary">{{ chat.name }}</div>
                                 <div class="color--secondary">Tutto fatto!</div>
                                 <div class="color--secondary">03/10/2021 14:01:54</div>
                             </div>
