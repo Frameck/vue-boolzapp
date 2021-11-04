@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Boolzapp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <main>
+            <!-- sfondo dell'applicazione -->
+            <div class="background">
+                <div class="background--header"></div>
+            </div>
+
+            <!-- contenuto principale -->
+            <div class="container">
+                <div class="container--left">
+                    <!-- sezione profilo utente -->
+                    <header class="container--left--header">
+                        <div class="img">
+                            <img src="img/avatar_io.jpg" alt="avatar_user">
+                        </div>
+                        <div class="info">
+                            <div class="color--primary">Nome Utente</div>
+                        </div>
+                        <div class="icons">
+                            <i class="fas fa-circle-notch"></i>
+                            <i class="fas fa-comment-alt"></i>
+                            <i class="fas fa-ellipsis-v"></i>
+                        </div>
+                    </header>
+
+                    <!-- sezione attiva notifiche -->
+                    <div class="card card--lightblue">
+                        <div class="img">
+                            <div class="circle">
+                                <i class="fas fa-bell-slash"></i>
+                            </div>
+                        </div>
+                        <div class="info">
+                            <div class="color--primary">Ricevi notifiche di nuovi messagi</div>
+                            <div class="color--secondary">Attiva notifiche desktop</div>
+                        </div>
+                    </div>
+
+                    <!-- search bar -->
+                    <div class="card search">
+                        <i class="fas fa-search color--secondary"></i>
+                        <div class="info">
+                            <input type="text" class="color--secondary" placeholder="Cerca o inizia una nuova chat">
+                        </div>
+                    </div>
+
+                    <!-- sezione card chat -->
+                    <section class="section--chat" v-for="chat in chatList">
+                        <!-- creo le card con il v-for -->
+                        <div class="card card--active">
+                            <div class="img">
+                                <img :src="createAvatarPath(chat.img)" alt="avatar_1">
+                            </div>
+                            <div class="info">
+                                <div class="color--primary">{{ chat.name }}</div>
+                                <div class="color--secondary">Tutto fatto!</div>
+                                <div class="color--secondary">03/10/2021 14:01:54</div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="container--right">
+                    <!-- header con le informazioni sulla chat attiva -->
+                    <header class="container--right--header">
+                        <div class="img">
+                            <img src="img/avatar_1.jpg" alt="avatar_user">
+                        </div>
+                        <div class="info">
+                            <div class="color--primary">Michele</div>
+                            <div class="color--secondary">Ultimo accesso oggi alle 03/10/2021 14:01:54</div>
+                        </div>
+                        <div class="icons">
+                            <i class="fas fa-search"></i>
+                            <i class="fas fa-paperclip"></i>
+                            <i class="fas fa-ellipsis-v"></i>
+                        </div>
+                    </header>
+
+                    <!-- sezione dove vengono mostrati i messaggi -->
+                    <section class="chat-messages">
+                        <div class="card--message card--message--sent">
+                            <div class="message message--sent">
+                                Testo molto molto molto molto molto molto lungo
+                                <span class="color--secondary">03/10/2021 14:01:54</span>
+                            </div>
+                        </div>
+
+                        <div class="card--message card--message--sent">
+                            <div class="message message--sent">
+                                Testo corto
+                                <span class="color--secondary">03/10/2021 14:01:54</span>
+                            </div>
+                        </div>
+
+                        <div class="card--message card--message--received">
+                            <div class="message message--received">
+                                Testo mediamente lungo
+                                <span class="color--secondary">03/10/2021 14:01:54</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- barra inferiore chat -->
+                    <div class="chat--bar--active">
+                        <div class="img">
+                            <i class="far fa-smile color--secondary"></i>
+                        </div>
+                        <input type="text" class="type-bar color--secondary" placeholder="Scrivi un messaggio">
+                        <div class="img">
+                            <i class="fas fa-microphone color--secondary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>
