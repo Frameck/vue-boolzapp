@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Boolzapp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <main>
+            <!-- sfondo dell'applicazione -->
+            <div class="background">
+                <div class="background--header"></div>
+            </div>
+
+            <!-- contenuto principale -->
+            <div class="container">
+                <div class="container--left">
+                    <!-- sezione profilo utente -->
+                    <header class="container--left--header">
+                        <div class="img">
+                            <img src="img/avatar_io.jpg" alt="avatar_user">
+                        </div>
+                        <div class="info">
+                            <div class="color--primary">Nome Utente</div>
+                        </div>
+                        <div class="icons">
+                            <i class="fas fa-circle-notch"></i>
+                            <i class="fas fa-comment-alt"></i>
+                            <i class="fas fa-ellipsis-v"></i>
+                        </div>
+                    </header>
+
+                    <!-- sezione attiva notifiche -->
+                    <div class="card card--lightblue">
+                        <div class="img">
+                            <div class="circle">
+                                <i class="fas fa-bell-slash"></i>
+                            </div>
+                        </div>
+                        <div class="info">
+                            <div class="color--primary">Ricevi notifiche di nuovi messagi</div>
+                            <div class="color--secondary">Attiva notifiche desktop</div>
+                        </div>
+                    </div>
+
+                    <!-- search bar -->
+                    <div class="card search">
+                        <i class="fas fa-search color--secondary"></i>
+                        <div class="info">
+                            <input type="text" class="color--secondary" placeholder="Cerca o inizia una nuova chat">
+                        </div>
+                    </div>
+
+                    <!-- sezione card chat -->
+                    <section class="section--chat">
+                        <!-- creo le card con il v-for -->
+                        <div class="card card--active" v-for="chat,i in chatList" @click="setActiveChat(chat)">
+                            <div class="img">
+                                <img :src="createAvatarPath(chat.img)" alt="avatar_{{ i }}">
+                            </div>
+                            <div class="info">
+                                <div class="color--primary">{{ chat.name }}</div>
+                                <div class="color--secondary">{{ getLastMessage(i) }}</div>
+                                <div class="color--secondary">{{ getLastMessageDate(i) }}</div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="container--right">
+                    <!-- header con le informazioni sulla chat attiva -->
+                    <header class="container--right--header">
+                        <div class="img">
+                            <img :src="createAvatarPath(this.activeChat.img)" alt="avatar_user">
+                        </div>
+                        <div class="info">
+                            <div class="color--primary">{{ activeChat.name }}</div>
+                            <div class="color--secondary">Ultimo accesso il {{ getLastMessageDateActiveUser() }}</div>
+                        </div>
+                        <div class="icons">
+                            <i class="fas fa-search"></i>
+                            <i class="fas fa-paperclip"></i>
+                            <i class="fas fa-ellipsis-v"></i>
+                        </div>
+                    </header>
+
+                    <!-- sezione dove vengono mostrati i messaggi -->
+                    <section class="chat-messages">
+                        <!-- mostro tutti i messaggi in activeChat con un v-for -->
+                        <div class="card--message"
+                        :class="message.status === 'sent' ? 'card--message--sent' : 'card--message--received'"
+                        v-for="message in activeChat.messages">
+                            <div class="message"
+                            :class="message.status === 'sent' ? 'message--sent' : 'message--received'">
+                                {{ message.text }}
+                                <span class="color--secondary">{{ message.date.toLocaleString() }}</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- barra inferiore chat -->
+                    <div class="chat--bar--active">
+                        <div class="img">
+                            <i class="far fa-smile color--secondary"></i>
+                        </div>
+                        <input type="text" class="type-bar color--secondary" placeholder="Scrivi un messaggio"
+                        v-model="newMessage"
+                        @keyup.enter="sendMessage()">
+                        <div class="img">
+                            <i class="fas fa-microphone color--secondary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>
