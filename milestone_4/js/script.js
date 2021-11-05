@@ -3,19 +3,9 @@ Vue.config.devtools = true
 const vueApp = new Vue({
     el: '#app',
     data: {
+        searchedUser: '',
         newMessage: '',
-        activeChat: {
-            name: '',
-            img: '',
-            visible: false,
-            messages: [
-                {
-                    date: '',
-                    status: '',
-                    text: ''
-                }
-            ]
-        },
+        activeChat: {},
         chatList: [
             {
                 name: 'Fabio',
@@ -133,8 +123,9 @@ const vueApp = new Vue({
         createAvatarPath(avatar) {
             return `./img/avatar${avatar}.jpg`
         },
-        setActiveChat(activeChat) {
+        setActiveChat(activeChat, i) {
             this.activeChat = activeChat
+            this.activeChat.index = i
         },
         getLastMessage(index) {
             if (this.chatList.length === 0) {
@@ -161,7 +152,6 @@ const vueApp = new Vue({
             return this.activeChat.messages[lastMessageIndex].date.toLocaleString()
         },
         sendMessage() {
-            // push del messaggio nell'array dei messaggi
             this.addMessage(this.newMessage, "sent");
       
             setTimeout(() => {
@@ -172,10 +162,25 @@ const vueApp = new Vue({
         },
         addMessage(text, status) {
             this.activeChat.messages.push({
-                date: new Date(),
+                date: dayjs().format('DD/MM/YYYY, HH:mm:ss'),
                 status,
                 text
             })
-        }
+        },
+        getFilteredUsers() {
+            if (!this.searchedUser) {
+                return this.chatList
+            }
+
+            return this.chatList.filter(user => {
+                return user.name.toLowerCase().includes(
+                    this.searchedUser.trim().toLowerCase()
+                )
+            })
+        },
+    },
+    beforeMount() {
+        this.activeChat = this.chatList[0]
+        this.activeChat.index = 0
     }
 })

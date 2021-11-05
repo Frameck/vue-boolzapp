@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
 </head>
 <body>
     <div id="app">
@@ -26,7 +27,7 @@
                             <img src="img/avatar_io.jpg" alt="avatar_user">
                         </div>
                         <div class="info">
-                            <div class="color--primary">Nome Utente</div>
+                            <div class="color--primary">Francesco Mecchi</div>
                         </div>
                         <div class="icons">
                             <i class="fas fa-circle-notch"></i>
@@ -52,14 +53,16 @@
                     <div class="card search">
                         <i class="fas fa-search color--secondary"></i>
                         <div class="info">
-                            <input type="text" class="color--secondary" placeholder="Cerca o inizia una nuova chat">
+                            <input type="text" class="color--secondary" placeholder="Cerca o inizia una nuova chat"
+                            v-model="searchedUser" @change="getFilteredUsers">
                         </div>
                     </div>
 
                     <!-- sezione card chat -->
                     <section class="section--chat">
                         <!-- creo le card con il v-for -->
-                        <div class="card card--active" v-for="chat,i in chatList" @click="setActiveChat(chat)">
+                        <div class="card" v-for="chat,i in getFilteredUsers()" @click="setActiveChat(chat, i)"
+                        :class="i === activeChat.index ? 'card--active' : ''">
                             <div class="img">
                                 <img :src="createAvatarPath(chat.img)" alt="avatar_{{ i }}">
                             </div>
