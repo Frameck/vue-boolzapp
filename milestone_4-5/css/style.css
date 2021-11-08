@@ -223,3 +223,60 @@ input {
 .message--received {
     background-color: white;
 }
+
+.message:hover .dropdown,
+.message:hover .dropbtn {
+    display: block;
+}
+
+.dropbtn {
+    color: rgb(165, 165, 165);
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    display: none;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    color: rgb(70, 70, 70);
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 5px;
+    right: 7px;
+    display: inline-block;
+}
+
+.dropdown--content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 140px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    text-align: left;
+}
+
+.dropdown--content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+}
+
+.dropdown a:hover {
+    background-color: #ddd;
+}
+
+.show {
+    display: block;
+}
+
+i {
+    cursor: pointer;
+}

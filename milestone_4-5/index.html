@@ -45,7 +45,7 @@
                         </div>
                         <div class="info">
                             <div class="color--primary">Ricevi notifiche di nuovi messagi</div>
-                            <div class="color--secondary">Attiva notifiche desktop</div>
+                            <a class="color--secondary" href="#">Attiva notifiche desktop</a>
                         </div>
                     </div>
 
@@ -96,11 +96,19 @@
                         <!-- mostro tutti i messaggi in activeChat con un v-for -->
                         <div class="card--message"
                         :class="message.status === 'sent' ? 'card--message--sent' : 'card--message--received'"
-                        v-for="message in activeChat.messages">
+                        v-for="message,i in activeChat.messages">
                             <div class="message"
                             :class="message.status === 'sent' ? 'message--sent' : 'message--received'">
                                 {{ message.text }}
-                                <span class="color--secondary">{{ message.date.toLocaleString() }}</span>
+                                <span class="color--secondary">{{ dayjs(message.date).format('DD/MM/YYYY, HH:mm:ss') }}</span>
+                                <div class="dropdown">
+                                    <button @click="showDropdownOnClick(i)" class="dropbtn"><i class="fas fa-chevron-down"></i></button>
+                                    <div class="dropdown--content" 
+                                    :class="message.isDropdownVisible === true ? 'show' : ''">
+                                      <a>Message info</a>
+                                      <a @click="deleteMessage(i)">Delete message</a>
+                                    </div>
+                                  </div>
                             </div>
                         </div>
                     </section>
